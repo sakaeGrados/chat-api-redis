@@ -1,0 +1,6 @@
+@BDII_TP_HostAddress = http://localhost:5008
+
+GET {{BDII_TP_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
