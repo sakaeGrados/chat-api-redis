@@ -14,7 +14,6 @@ public class MessageController : ControllerBase
         _service = service;
     }
 
-    // 📩 Crear mensaje
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateMessageDto dto)
     {
@@ -31,7 +30,6 @@ public class MessageController : ControllerBase
         return Ok(result);
     }
 
-    // 📥 Obtener mensajes
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
