@@ -1,5 +1,4 @@
-﻿using BDII_TP.Models;
-public class Message
+﻿public class Message
 {
     public string Id { get; set; }
     public string UserId { get; set; }

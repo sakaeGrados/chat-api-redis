@@ -13,7 +13,14 @@ builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<IConnectionMultiplexer>(
-    ConnectionMultiplexer.Connect("localhost:6379")
+    ConnectionMultiplexer.Connect(new ConfigurationOptions
+    {
+        EndPoints = { { "redis-10143.c308.sa-east-1-1.ec2.cloud.redislabs.com", 10143 } },
+        User = "default",
+        Password = "mdcWUHKmUGrUGl6rS6UchlYVzEyXjyUn", 
+        Ssl = true, 
+        AbortOnConnectFail = false
+    })
 );
 
 var app = builder.Build();
@@ -27,5 +34,4 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.MapControllers();
 app.MapHub<ChatHub>("/chatHub");
-
 app.Run();
