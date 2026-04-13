@@ -26,6 +26,7 @@ namespace BDII_TP.Services.Implementations
             {
                 Id = Guid.NewGuid().ToString(),
                 UserId = dto.UserId,
+                ReceiverId = dto.ReceiverId,
                 Username = dto.Username,
                 Content = dto.Content,
                 Timestamp = DateTime.UtcNow
@@ -41,6 +42,18 @@ namespace BDII_TP.Services.Implementations
         public async Task<List<Message>> GetMessagesAsync()
         {
             return await _repository.GetMessagesAsync();
+        }
+        public async Task<List<Message>> GetMessagesBySenderAsync(string userId)
+        {
+            return await _repository.GetMessagesBySenderAsync(userId);
+        }
+        public async Task<List<Message>> GetMessagesByReceiverAsync(string receiverId)
+        {
+            return await _repository.GetMessagesByReceiverAsync(receiverId);
+        }
+        public async Task<List<Message>> GetConversationAsync(string user1, string user2)
+        {
+            return await _repository.GetConversationAsync(user1, user2);
         }
     }
 }

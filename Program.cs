@@ -12,16 +12,17 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddSignalR();
-builder.Services.AddSingleton<IConnectionMultiplexer>(
-    ConnectionMultiplexer.Connect(new ConfigurationOptions
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+{
+    var config = new ConfigurationOptions
     {
         EndPoints = { { "redis-10143.c308.sa-east-1-1.ec2.cloud.redislabs.com", 10143 } },
         User = "default",
-        Password = "mdcWUHKmUGrUGl6rS6UchlYVzEyXjyUn", 
-        Ssl = true, 
-        AbortOnConnectFail = false
-    })
-);
+        Password = "mdcWUHKmUGrUGl6rS6UchlYVzEyXjyUn"
+    };
+
+    return ConnectionMultiplexer.Connect(config);
+});
 
 var app = builder.Build();
 

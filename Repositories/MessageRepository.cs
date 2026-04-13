@@ -28,4 +28,35 @@ public class MessageRepository : IMessageRepository
     .Select(m => m!)
     .ToList();
     }
+
+    public async Task<List<Message>> GetMessagesBySenderAsync(string userId)
+    {
+        var messages = await GetMessagesAsync();
+
+        return messages
+            .Where(m => m.UserId == userId)
+            .ToList();
+    }
+
+    public async Task<List<Message>> GetMessagesByReceiverAsync(string receiverId)
+    {
+        var messages = await GetMessagesAsync();
+
+        return messages
+            .Where(m => m.ReceiverId == receiverId)
+            .ToList();
+    }
+
+    public async Task<List<Message>> GetConversationAsync(string user1, string user2)
+    {
+        var messages = await GetMessagesAsync();
+
+        return messages
+            .Where(m =>
+                (m.UserId == user1 && m.ReceiverId == user2) ||
+                (m.UserId == user2 && m.ReceiverId == user1)
+            )
+            .OrderBy(m => m.Timestamp)
+            .ToList();
+    }
 }
